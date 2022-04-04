@@ -9,12 +9,12 @@ import OrderDetail from '../components/OrderDetail'
 import { PayPalScriptProvider, PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 
 const Cart = () => {
-  const amount = cart.total;
   const currency = "USD";
   const style = {layout:"vertical"};
   const dispatch = useDispatch()
   const router = useRouter();
   const cart = useSelector((state) => state.cart)
+  const amount = cart.total;
   const [open,setOpen] = useState(false)
   const [cash,setCash] = useState(false)
 
@@ -69,7 +69,7 @@ const Cart = () => {
                     customer: shipping.name.full_name,
                     address:shipping.address.address_line_1,
                     total:cart.total,
-                    method:1
+                    method:1,
                   })
                 }
               )

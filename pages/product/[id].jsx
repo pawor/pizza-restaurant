@@ -6,11 +6,11 @@ import {useState} from 'react'
 import axios from 'axios'
 
 const Product = ({pizza}) => {
-  const [size, setSize] = useState(0);
-  const [price, setPrice] = useState(pizza.prices[0]);
-  const [extras, setExtras] = useState([]);
-  const [quantity, setQuantity] = useState(1);
-  const dispatch = useDispatch();
+  const [size, setSize] = useState(0)
+  const [price, setPrice] = useState(pizza.prices[0])
+  const [extras, setExtras] = useState([])
+  const [quantity, setQuantity] = useState(1)
+  const dispatch = useDispatch()
 
   const changePrice = (number) => {
     setPrice(price+number);
@@ -93,7 +93,7 @@ const Product = ({pizza}) => {
   )
 }
 export const getServerSideProps = async ({params}) => {
-  const res = await axios.get(`http://localhost:3000/api/products/${params.id}`);
+  const res = await axios.get(`http://localhost:3000/api/products/${params.id}`)
   return {
     props:{
       pizza: res.data
