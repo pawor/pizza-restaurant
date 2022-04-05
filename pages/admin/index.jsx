@@ -3,13 +3,15 @@ import Image from 'next/image'
 import axios from 'axios'
 import { useState } from 'react'
 
-const Index = ({orders, products}) => {
+
+const Index = ( {orders, products} ) => {
 
     const [pizzaList, setPizzaList] = useState(products)
     const [orderList, setOrderList] = useState(orders)
-    const status = ["preparing", "on the way", "delivered"];
+    const status = ["preparing", "on the way", "delivered"]
 
     const handleDelete = async (id) => {
+
         try{
             const res = await axios.delete("http://localhost:3000/api/products/" + id)
             setPizzaList(pizzaList.filter((pizza) => pizza._id !== id))
@@ -17,9 +19,11 @@ const Index = ({orders, products}) => {
         }catch (err) {
             console.log(err)
         }
+
     }
 
     const handleStatus = async (id) => {
+        
         const item = orderList.filter((order) => order._id === id)[0]
         const currentStatus = item.status
 
@@ -112,7 +116,16 @@ const Index = ({orders, products}) => {
   )
 }
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (ctx) => {
+    const myCookie = ctx.req?.cookies || ""
+    if(myCookie.token !== process.env.TOKEN){
+        return {
+            redirect: {
+                destination: '/admin/login',
+                permanent: false,
+            }
+        }
+    }
     const productRes = await axios.get("http://localhost:3000/api/products");
     const orderRes = await axios.get("http://localhost:3000/api/orders");
 
